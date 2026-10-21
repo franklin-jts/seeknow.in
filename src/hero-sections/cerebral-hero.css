@@ -3663,3 +3663,69 @@ html { scroll-behavior: smooth; }
     -webkit-text-fill-color: #8b85a0 !important;
     font-size: 11px !important;
 }
+
+/* ════════════════════════════════════════════
+   TORCH TEXT — description & stats
+   Single-element, no cloning, no duplicates
+   Uses background-clip:text + radial gradient
+════════════════════════════════════════════ */
+
+.sn-torch-text {
+    --tx: -9999px;
+    --ty: -9999px;
+    --tactive: 0;
+    --torch-radius: 200px;
+
+    /* Two-stop gradient: bright white at cursor, dim purple-grey elsewhere */
+    background: radial-gradient(
+        circle var(--torch-radius) at var(--tx) var(--ty),
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.9)  20%,
+        rgba(200, 185, 230, 0.65) 50%,
+        rgba(120, 105, 155, 0.35) 75%,
+        rgba(90,  75, 125, 0.28)  100%
+    ) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+
+    /* Smooth transition on initial render */
+    transition: none;
+}
+
+/* When mouse is inactive — static dim state */
+.sn-torch-text[style*="--tactive: 0"],
+.sn-torch-text:not([style]) {
+    background: radial-gradient(
+        circle 1px at -9999px -9999px,
+        rgba(120, 105, 155, 0.38) 0%,
+        rgba(120, 105, 155, 0.38) 100%
+    ) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Stat values — keep gradient but let torch reveal them */
+.sn-torch-text .stat-value {
+    background: inherit !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    font-size: 32px !important;
+    font-weight: 800 !important;
+}
+
+.sn-torch-text .stat-label {
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}
+
+/* Stat divider — not text, keep as border */
+.sn-torch-text .hero-stat-divider {
+    background: rgba(139, 92, 246, 0.3) !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+}

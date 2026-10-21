@@ -154,11 +154,11 @@ export function createCerebralHero() {
                         <span class="ht-line ht-white">Grow. Together.</span>
                     </h1>
 
-                    <p class="hero-description">
+                    <p class="hero-description sn-torch-text" id="heroDesc">
                         SeekNow unifies AI-powered talent discovery, employee referral networks, and CRM operations — so your team spends less time on tools and more time on results.
                     </p>
 
-                    <div class="hero-stats">
+                    <div class="hero-stats sn-torch-text" id="heroStats">
                         <div class="hero-stat">
                             <span class="stat-value" data-target="40" data-suffix="%">0%</span>
                             <span class="stat-label">Faster Hiring</span>
@@ -687,6 +687,36 @@ export function createCerebralHero() {
         if ('ontouchstart' in window) wrapper.classList.add('touch-device');
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) wrapper.classList.add('reduced-motion');
 
+        tick();
+    })();
+
+    // ── Torch effect on description + stats ──
+    (function initTorchText() {
+        const torchEls = document.querySelectorAll('.sn-torch-text');
+        if (!torchEls.length) return;
+
+        let mx = -9999, my = -9999;
+        let cx = -9999, cy = -9999;
+        const LERP = 0.1;
+
+        function tick() {
+            cx += (mx - cx) * LERP;
+            cy += (my - cy) * LERP;
+
+            torchEls.forEach(el => {
+                const r = el.getBoundingClientRect();
+                const lx = cx - r.left;
+                const ly = cy - r.top;
+                el.style.setProperty('--tx', `${lx}px`);
+                el.style.setProperty('--ty', `${ly}px`);
+                el.style.setProperty('--tactive', mx < -99 ? '0' : '1');
+            });
+
+            requestAnimationFrame(tick);
+        }
+
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        document.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
         tick();
     })();
 
