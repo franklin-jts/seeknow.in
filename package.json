@@ -1,0 +1,16 @@
+{
+  "name": "seeknow-logo-reveal",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:hero": "vite --open /hero-demo.html",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "vite": "^8.3.4"
+  }
+}
